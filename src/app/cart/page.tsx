@@ -3,11 +3,11 @@
 import PaymentForm from "@/components/PaymentForm";
 import ShippingForm from "@/components/ShippingForm";
 import useCartStore from "@/stores/cartStore";
-import { CartItemsType, ShippingFormInputs } from "@/types";
+import { ShippingFormInputs } from "@/types";
 import { ArrowRight, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 
 const steps = [
   {
@@ -81,7 +81,7 @@ const steps = [
 //   },
 // ];
 
-const CartPage = () => {
+const CartContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [shippingForm, setShippingForm] = useState<ShippingFormInputs>();
@@ -221,6 +221,14 @@ const CartPage = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const CartPage = () => {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center mt-12">Loading...</div>}>
+      <CartContent />
+    </Suspense>
   );
 };
 
